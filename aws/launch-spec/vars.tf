@@ -49,40 +49,23 @@ variable "instance_types" {
   description = "(Optional) A list of instance types allowed to be provisioned for pods pending under the specified launch specification. The list overrides the list defined for the cluster."
 }
 
-variable "labels_key" {
-  type        = string
-  description = "(Required) The label key."
-}
-
-variable "labels_value" {
-  type        = string  
-  description = "(Required) The label value."
-}
-
-variable "taints_key" {
-  type        = string  
-  description = "(Required) The taint key."
-}
-
-variable "taints_value" {
-  type        = string  
-  description = "(Required) The taint value."
-}
-
-variable "taints_effect" {
-  type        = string
-  default     = "NoSchedule"
-  description = "(Required) The effect of the taint. Valid values: NoSchedule, PreferNoSchedule, NoExecute."
-}
-
 variable "strategy_spot_percentage" {
   type        = number
   default     = 0
   description = "(Optional; if not using spot_percentege under ocean strategy) When set, Ocean will proactively try to maintain as close as possible to the percentage of Spot instances out of all the Virtual Node Group instances."
 }
 
+variable "labels" {
+  type        = list(object({ labels_key = string, labels_value = string, }))
+  description = "(Optional) Optionally adds labels to instances launched in the cluster."
+}
+
+variable "taints" {
+  type        = list(object({ taints_key = string, taints_value = string, taints_effect = string }))
+  description = "(Optional) Optionally adds labels to instances launched in the cluster."
+}
+
 variable "tags" {
-  type        = map(string)
-  default     = {}
+  type        = list(object({ tags_key = string, tags_value = string }))
   description = "The list of Tags"
 }

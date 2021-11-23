@@ -7,23 +7,34 @@ resource "spotinst_ocean_aws_launch_spec" "soals" {
   security_groups       = var.security_groups
   subnet_ids            = var.subnet_ids
   user_data             = var.user_data
-                                                                                                                                                                                                                                                                                                       
-  instance_types = var.instance_types
-
-  labels {
-    key    = var.labels_key
-    value  = var.labels_value
-  }
-
-  taints {
-    key    = var.taints_key
-    value  = var.taints_value
-    effect = var.taints_effect
-  }
-
+  instance_types        = var.instance_types
+  
   strategy {
     spot_percentage = var.strategy_spot_percentage
   }
+  
+  dynamic "labels" {
+    for_each = var.labels
+    content {
+      key   = labels.value.labels_key
+      value = labels.value.labels_value
+    }
+  }
 
-  tags = var.tags
+  dynamic "taints" {
+    for_each = var.taints
+    content {
+      key     = taints.value.taints_key
+      value   = taints.value.taints_value
+      effect  = taints.value.taints_effect
+    }
+  }
+
+  dynamic "tags" {
+    for_each  = var.tags
+    content {
+      key   = tags.value.tags_key
+      value = tags.value.tags_value
+    }
+  }
 }
