@@ -44,14 +44,14 @@ variable "subnet_ids" {
 }
 
 variable "instance_types" {
-  type        = list(string)
-  default     = []  
+  type        = list
+  default     = null
   description = "(Optional) A list of instance types allowed to be provisioned for pods pending under the specified launch specification. The list overrides the list defined for the cluster."
 }
 
 variable "strategy_spot_percentage" {
   type        = number
-  default     = 0
+  default     = 100
   description = "(Optional; if not using spot_percentege under ocean strategy) When set, Ocean will proactively try to maintain as close as possible to the percentage of Spot instances out of all the Virtual Node Group instances."
 }
 
